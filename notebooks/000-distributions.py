@@ -7,12 +7,11 @@ import notebook_setup
 # %% [markdown]
 # ## Imports
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 from src.distribution.gen_distribution import DistributionGenerator
 from src.distribution.plot_distribution import DistributionVisualizer
 from src.distribution.pdf_estimator import PDFEstimator
-from src.information_theory.metrics import InformationTheory
 
 # %% [markdown]
 # ## Initialize Distribution Generator and Visualizer
@@ -63,3 +62,55 @@ _ = dv.plot_multiple_distributions(
 )
 
 _ = dv.plot_violin_box({k: disb[k] for k in disb if k != "X"}, stat="density")
+
+# %%
+# %% [markdown]
+# ## check how P(x) looks like
+
+
+# %%
+# Call the function to plot P_normal PDF
+dv.plot_pdf(
+    pdf["P_normal"],
+    x_eval,
+    "Probability Density Function of P_normal",
+    "P_normal PDF",
+    "blue",
+)
+# %%
+
+dv.plot_pdf(
+    pdf["Q_normal_shifted"],
+    x_eval,
+    "Probability Density Function of Q_normal_shifted",
+    "Q_normal_shifted PDF",
+    "red",
+)
+
+# %%
+dv.plot_pdf(
+    pdf["R_normal_wider"],
+    x_eval,
+    "Probability Density Function of R_normal_wider",
+    "R_normal_wider PDF",
+    "green",
+)
+
+# %%
+dv.plot_pdf(
+    pdf["S_uniform"],
+    x_eval,
+    "Probability Density Function of S_uniform",
+    "S_uniform PDF",
+    "orange",
+)
+
+# %%
+
+dv.plot_pdf(
+    pdf["T_bimodal"],
+    x_eval,
+    "Probability Density Function of T_bimodal",
+    "T_bimodal PDF",
+    "purple",
+)

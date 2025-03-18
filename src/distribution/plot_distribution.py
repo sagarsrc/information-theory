@@ -477,3 +477,70 @@ class DistributionVisualizer:
         plt.tight_layout()
 
         return ax
+
+    def plot_pdf(
+        self,
+        pdf,
+        x_eval,
+        title="Probability Density Function",
+        label="PDF",
+        color=None,
+        ax=None,
+        dpi=None,
+        **kwargs
+    ):
+        """
+        Plots the Probability Density Function (PDF) for a given distribution.
+
+        Parameters:
+        -----------
+        pdf : callable
+            The probability density function to evaluate.
+        x_eval : array-like
+            The x values at which to evaluate the PDF.
+        title : str
+            The title of the plot.
+        label : str
+            The label for the PDF in the legend.
+        color : str
+            The color of the plot line.
+        ax : matplotlib.axes.Axes, optional
+            Pre-existing axes to plot on
+        dpi : int, optional
+            Resolution in dots per inch for the figure. If None, uses the class default.
+        **kwargs :
+            Additional keyword arguments for sns.lineplot
+
+        Returns:
+        --------
+        matplotlib.axes.Axes
+            The matplotlib axes containing the plot
+        """
+        # Create figure if ax not provided
+        if ax is None:
+            fig, ax = plt.subplots(figsize=self.figsize, dpi=dpi or self.dpi)
+
+        # Plot the PDF
+        sns.lineplot(
+            x=x_eval, y=pdf.evaluate(x_eval), label=label, color=color, ax=ax, **kwargs
+        )
+
+        # Customize plot appearance
+        ax.set_title(title, fontsize=14, fontweight="bold")
+        ax.set_xlabel("Value", fontsize=12)
+        ax.set_ylabel("Density", fontsize=12)
+        ax.legend(fontsize=10)
+        ax.grid(alpha=0.2)
+
+        plt.tight_layout()
+
+        return ax
+
+        plt.figure(figsize=(10, 6))
+        sns.lineplot(x=x_eval, y=pdf.evaluate(x_eval), label=label, color=color)
+        plt.title(title)
+        plt.xlabel("x")
+        plt.ylabel("Density")
+        plt.legend()
+        plt.grid()
+        plt.show()
