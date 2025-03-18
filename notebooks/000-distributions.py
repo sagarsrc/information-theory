@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Information Theory
+# # Distributions and Probability Density Functions
 # %% [markdown]
 # auto-reload modules in src folder
 import notebook_setup
@@ -57,11 +57,9 @@ _ = dv.plot_single_distribution(disb["P_normal"], stat="density")
 # let's take a look at distribution of P and Q
 _ = dv.plot_distributions_grid({k: disb[k] for k in disb}, stat="density")
 
-_ = dv.plot_multiple_distributions(
-    {k: disb[k] for k in disb if k != "X"}, stat="density"
-)
+_ = dv.plot_multiple_distributions({k: disb[k] for k in disb}, stat="density")
 
-_ = dv.plot_violin_box({k: disb[k] for k in disb if k != "X"}, stat="density")
+_ = dv.plot_violin_box({k: disb[k] for k in disb}, stat="density")
 
 # %%
 # %% [markdown]

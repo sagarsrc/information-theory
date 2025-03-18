@@ -18,7 +18,7 @@ class PDFEstimator:
         data : array-like
             Sample data to estimate PDF from
         method : str
-            Method to use: 'kde', 'scipy_kde', 'sklearn_kde', or 'histogram'
+            Method to use: 'kde'
         bandwidth : float or str or None
             Bandwidth for KDE methods (None for automatic selection)
             For scipy_kde, can also be 'scott' or 'silverman'
@@ -34,16 +34,10 @@ class PDFEstimator:
         self.kernel = kernel
 
         # Create PDF estimator based on chosen method
-        if method == "kde" or method == "scipy_kde":
+        if method == "kde":
             self._create_scipy_kde()
-        elif method == "sklearn_kde":
-            self._create_sklearn_kde(kernel)
-        elif method == "histogram":
-            self._create_histogram_pdf()
         else:
-            raise ValueError(
-                f"Method '{method}' not recognized. Use 'kde', 'scipy_kde', 'sklearn_kde', or 'histogram'."
-            )
+            raise ValueError(f"Method '{method}' not recognized. Use 'kde'")
 
     def _create_scipy_kde(self):
         """Create PDF estimator using scipy's gaussian_kde."""
@@ -51,22 +45,6 @@ class PDFEstimator:
 
         # Define pdf function
         self.pdf = lambda x: self.kde(x)
-
-    def _create_sklearn_kde(self, kernel):
-        """Create PDF estimator using sklearn's KernelDensity."""
-        # Set default bandwidth if None
-        if self.bandwidth is None:
-            # Scott's rule for bandwidth
-            self.bandwidth = self.data.std() * (len(self.data) ** (-1 / 5))
-
-        # Fit KDE model
-        self.kde = KernelDensity(bandwidth=self.bandwidth, kernel=kernel)
-        self.kde.fit(self.data.reshape(-1, 1))
-
-        # Define pdf function
-        self.pdf = lambda x: np.exp(
-            self.kde.score_samples(np.asarray(x).reshape(-1, 1))
-        )
 
     def evaluate(self, x):
         """

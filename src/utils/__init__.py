@@ -1,3 +1,5 @@
-from .gen_distribution import DistributionGenerator
-from .pdf_estimator import PDFEstimator
-from .visualization import InformationVisualizer
+from .entropy_plotter import (
+    plot_entropy_subplots,
+    plot_cross_entropy_subplots,
+    plot_kl_divergence_subplots,
+)
